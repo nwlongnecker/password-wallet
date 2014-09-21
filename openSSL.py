@@ -10,3 +10,6 @@ def decrypt(key, cipher):
 def encrypt(key, plaintext):
 	# print('Encrypted ' + plaintext + ' with key ' + key)
 	return plaintext
+
+def generatePassword():
+	return 'password'
