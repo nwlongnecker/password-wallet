@@ -12,4 +12,5 @@ def encrypt(key, plaintext):
 	return plaintext
 
 def generatePassword():
+	# print('Generated a new password')
 	return 'password'
