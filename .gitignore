@@ -1,3 +1,4 @@
 wallet
 __pycache__
 *.pyc
+*.tmp
