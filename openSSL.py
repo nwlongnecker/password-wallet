@@ -9,27 +9,41 @@ import subprocess
 def hash(plaintext):
 	# create temp files
 	fileIO.createFile('plain.tmp')
-	fileIO.createFile('hash.tmp')
+	fileIO.createFile('key.tmp')
 	# write out the input
 	fileIO.writeFile('plain.tmp', plaintext)
 	# run openssl hash command
-	# TODO: strip SHA256(in.tmp)=... from string
-	subprocess.check_output(['openssl', 'dgst', '-sha256', '-hex', '-out', 'hash.tmp', 'plain.tmp'], stderr=subprocess.STDOUT)
+	subprocess.check_output(['openssl', 'dgst', '-sha256', '-binary', '-out', 'key.tmp', 'plain.tmp'], stderr=subprocess.STDOUT)
 	# read in the output
-	hashKey = fileIO.readFile('hash.tmp')
+	hashKey = fileIO.readFile('key.tmp')
 	# delete temp files
 	fileIO.removeFile('plain.tmp')
-	fileIO.removeFile('hash.tmp')
+	fileIO.removeFile('key.tmp')
 	# return the output
-	return hashKey.replace('SHA256(in.tmp)= ', '', 1)
+	return hashKey
 
 # Decrypts the cipher with the given key
 # @param String key The key to use when decrypting the cipher
 # @param String cipher The encrypted text
 # @return Returns the cipher in plaintext
-def decrypt(key, cipher):
-	# print('Decrypted ' + cipher + ' with key ' + key)
-	return cipher
+def decrypt(key, ciphertext):
+	# create temp files
+	fileIO.createFile('key.tmp')
+	fileIO.createFile('cipher.tmp')
+	fileIO.createFile('plain.tmp')
+	# write out the input
+	fileIO.writeFile('key.tmp', key)	
+	fileIO.writeFile('cipher.tmp', ciphertext)
+	# run openssl dec command
+	subprocess.check_output(['openssl', 'enc', '-d', '-aes-256-cbc', '-pass', 'stdin', '-out', 'plain.tmp', '-in', 'cipher.tmp'], stdin=file('key.tmp'))
+	# read in the output
+	plaintext = fileIO.readFile('plain.tmp')
+	# delete temp files
+	fileIO.removeFile('key.tmp')
+	fileIO.removeFile('cipher.tmp')
+	fileIO.removeFile('plain.tmp')
+	# return the output
+	return plaintext
 
 # Encrypts the plaintext with the given key
 # @param String key The key to use when encrypting the plaintext
@@ -44,8 +58,7 @@ def encrypt(key, plaintext):
 	fileIO.writeFile('key.tmp', key)	
 	fileIO.writeFile('plain.tmp', plaintext)
 	# run openssl enc command
-	#openssl enc -aes-256-cbc -pass stdin -in infile.txt -out this.txt
-	subprocess.check_output(['openssl', 'enc', '-aes-256-cbc', '-pass', 'key.tmp', '-in', 'plain.tmp', '-out', 'cipher.tmp'], stderr=subprocess.STDOUT)
+	subprocess.check_output(['openssl', 'enc', '-aes-256-cbc', '-pass', 'stdin', '-out', 'cipher.tmp', '-in', 'plain.tmp'], stdin=file('key.tmp'))
 	# read in the output
 	ciphertext = fileIO.readFile('cipher.tmp')
 	# delete temp files
