@@ -1,9 +1,15 @@
 # Helper module for interfacing with OpenSSL
+import fileIO
 
 # Hashes the input to a key
 # @param String inputKey The key to hash
 # @return Returns the hashed key
 def hash(inputKey):
+	# create temp files
+	#fileIO.createFile("in.tmp")
+	#fileIO.createFile("out.tmp")
+	# run openssl hash command
+	#subprocess.check_output(['mycmd', 'myarg'], stderr=subprocess.STDOUT)
 	# print('Hashed ' + inputKey + ' to ' + inputKey)
 	return inputKey
 

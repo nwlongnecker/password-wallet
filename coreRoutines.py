@@ -15,7 +15,7 @@ FIRST_LINE = 'Password Wallet:'
 # @param String key The key to use when decrypting the wallet
 # @return The contents of the wallet in plaintext
 def openWallet(key):
-	encrypted = fileIO.readFile()
+	encrypted = fileIO.readFile(fileIO.WALLET_FILE)
 	plaintext = openSSL.decrypt(key, encrypted)
 	if plaintext.splitlines()[0] != FIRST_LINE:
 		sys.exit('Incorrect Password')
@@ -27,7 +27,7 @@ def openWallet(key):
 # @param String plaintext The plaintext contents of the password wallet
 def closeWallet(key, plaintext):
 	encrypted = openSSL.encrypt(key, plaintext)
-	fileIO.writeFile(encrypted)
+	fileIO.writeFile(fileIO.WALLET_FILE, encrypted)
 
 # Creates a new wallet. Will overwrite the previous wallet.
 def newWallet():
@@ -35,6 +35,7 @@ def newWallet():
 	confirmPassword = uiHelper.getPassword('Confirm New Password:')
 	if password == confirmPassword:
 		key = openSSL.hash(password)
+		fileIO.createFile(fileIO.WALLET_FILE)
 		closeWallet(key, FIRST_LINE + '\n')
 		print('Wallet created')
 	else:

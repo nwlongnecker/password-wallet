@@ -6,7 +6,7 @@ import uiHelper
 import openSSL
 
 # Check whether the wallet has already been initialized
-if fileIO.fileExists():
+if fileIO.fileExists(fileIO.WALLET_FILE):
 	print('Wallet already initialized')
 	if uiHelper.askReset():
 		# Require the old password to reset the wallet

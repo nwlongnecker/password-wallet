@@ -8,7 +8,7 @@ import fileIO
 import sys
 
 # Check to make sure the wallet has been initialized
-if not fileIO.fileExists():
+if not fileIO.fileExists(fileIO.WALLET_FILE):
 	sys.exit('Wallet not initialized')
 # Prompts the user for the master password and hashes it into the encryption key
 key = openSSL.hash(uiHelper.getPassword())
