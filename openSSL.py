@@ -21,7 +21,7 @@ def hash(plaintext):
 	fileIO.removeFile('plain.tmp')
 	fileIO.removeFile('hash.tmp')
 	# return the output
-	return hashKey
+	return hashKey.replace('SHA256(in.tmp)= ', '', 1)
 
 # Decrypts the cipher with the given key
 # @param String key The key to use when decrypting the cipher
