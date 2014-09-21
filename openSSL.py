@@ -1,17 +1,30 @@
 # Helper module for interfacing with OpenSSL
+
 import fileIO
+import subprocess
+
+INPUT_FILE = "in.tmp"
+OUTPUT_FILE = "out.tmp"
 
 # Hashes the input to a key
-# @param String inputKey The key to hash
+# @param String plaintext The string to hash
 # @return Returns the hashed key
-def hash(inputKey):
+def hash(plaintext):
 	# create temp files
-	#fileIO.createFile("in.tmp")
-	#fileIO.createFile("out.tmp")
+	fileIO.createFile(INPUT_FILE)
+	fileIO.createFile(OUTPUT_FILE)
+	# write out the input
+	fileIO.writeFile(INPUT_FILE, plaintext)
 	# run openssl hash command
-	#subprocess.check_output(['mycmd', 'myarg'], stderr=subprocess.STDOUT)
-	# print('Hashed ' + inputKey + ' to ' + inputKey)
-	return inputKey
+	# TODO: strip SHA256(in.tmp)=... from string
+	subprocess.check_output(['openssl', 'dgst', '-sha256', '-hex', '-out', OUTPUT_FILE, INPUT_FILE], stderr=subprocess.STDOUT)
+	# read in the output
+	hashKey = fileIO.readFile(OUTPUT_FILE)
+	# delete temp files
+	fileIO.removeFile(INPUT_FILE)
+	fileIO.removeFile(OUTPUT_FILE)
+	# return the output
+	return hashKey
 
 # Decrypts the cipher with the given key
 # @param String key The key to use when decrypting the cipher

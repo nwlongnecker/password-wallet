@@ -33,3 +33,7 @@ def readFile(path):
 # Creates a file with only wr permissions for this user
 def createFile(path):
 	os.open(path, os.O_WRONLY | os.O_CREAT, 0o600)
+
+# Removes a file
+def removeFile(path):
+	os.remove(path)
