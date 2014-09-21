@@ -1,8 +1,11 @@
 import getpass
 from tkinter import Tk
 
-def getPassword():
-	return getpass.getpass()
+def getPassword(prompt = 'Password: '):
+	return getpass.getpass(prompt)
+
+def getSite():
+	return input('Site: ')
 
 def addToClipboard(text):
 	tk = Tk()
