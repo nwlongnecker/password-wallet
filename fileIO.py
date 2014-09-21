@@ -14,10 +14,18 @@ def fileExists():
 # @param String text The text to write to the wallet file
 def writeFile(text):
 	f = open(WALLET_FILE, 'w')
-	f.write(text)
+	try:
+		f.write(text)
+	finally:
+		f.close()
 
 # Reads the entire wallet file
 # @return Returns the contents of the wallet file
 def readFile():
 	f = open(WALLET_FILE, 'r')
-	return f.read()
+	text = ""
+	try: 
+		text = f.read()
+	finally:
+		f.close()
+	return text
