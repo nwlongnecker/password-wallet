@@ -10,9 +10,6 @@ from datetime import datetime
 def hash(plaintext, outputType):
 	hashKey = "nothing"
 	try:
-		# create temp files
-		fileIO.createFile('plain.tmp')
-		fileIO.createFile('key.tmp')
 		# write out the input
 		fileIO.writeFile('plain.tmp', plaintext)
 		# run openssl hash command
@@ -33,10 +30,6 @@ def hash(plaintext, outputType):
 def decrypt(key, ciphertext):
 	plaintext = "nothing"
 	try:
-		# create temp files
-		fileIO.createFile('key.tmp')
-		fileIO.createFile('cipher.tmp')
-		fileIO.createFile('plain.tmp')
 		# write out the input
 		fileIO.writeFile('key.tmp', key)	
 		fileIO.writeFile('cipher.tmp', ciphertext)
@@ -59,10 +52,6 @@ def decrypt(key, ciphertext):
 def encrypt(key, plaintext):
 	ciphertext = "nothing"
 	try:
-		# create temp files
-		fileIO.createFile('key.tmp')
-		fileIO.createFile('plain.tmp')
-		fileIO.createFile('cipher.tmp')
 		# write out the input
 		fileIO.writeFile('key.tmp', key)	
 		fileIO.writeFile('plain.tmp', plaintext)

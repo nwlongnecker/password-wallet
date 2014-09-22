@@ -13,26 +13,17 @@ def fileExists(path):
 # Writes the given text to the given file
 # @param String text The text to write to the given file
 def writeFile(path, text):
-	f = open(path, 'w')
-	try:
-		f.write(text)
-	finally:
-		f.close()
+	with os.fdopen(os.open(path, os.O_WRONLY | os.O_CREAT, 0o600), 'w') as file: 
+		file.write(text)
 
 # Reads the entire given file
 # @return Returns the contents of the given file
 def readFile(path):
-	f = open(path, 'r')
-	text = ""
-	try: 
-		text = f.read()
-	finally:
-		f.close()
-	return text
-
-# Creates a file with only wr permissions for this user
-def createFile(path):
-	os.open(path, os.O_WRONLY | os.O_CREAT, 0o600)
+	if fileExists(path):
+                with os.fdopen(os.open(path, os.O_RDONLY, 0o600), 'r') as file:
+                        return file.read()
+        else:
+                raise Exception("readFile("+path+"): Could not find file")
 
 # Removes a file
 def removeFile(path):
