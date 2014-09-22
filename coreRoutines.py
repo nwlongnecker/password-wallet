@@ -34,7 +34,7 @@ def newWallet():
 	password = uiHelper.getPassword('New Password:')
 	confirmPassword = uiHelper.getPassword('Confirm New Password:')
 	if password == confirmPassword:
-		key = openSSL.hash(password)
+		key = openSSL.hash(password, '-binary')
 		fileIO.createFile(fileIO.WALLET_FILE)
 		closeWallet(key, FIRST_LINE + '\n')
 		print('Wallet created')

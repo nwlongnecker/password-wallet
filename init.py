@@ -9,10 +9,10 @@ import openSSL
 if fileIO.fileExists(fileIO.WALLET_FILE):
 	print('Wallet already initialized')
 	if uiHelper.askReset():
-		# Require the old password to reset the wallet
-		oldKey = openSSL.hash(uiHelper.getPassword('Old Password:'))
+		# Get old password key
+		key = openSSL.hash(uiHelper.getPassword(), '-binary')
 		# Open the wallet to check that the old password is valid
-		cr.openWallet(oldKey)
+		cr.openWallet(key)
 		# Create a new wallet
 		cr.newWallet()
 else:
