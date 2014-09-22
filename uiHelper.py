@@ -1,7 +1,7 @@
 # Helper module for interfacing with the user
 
 import getpass
-#from Tkinter import Tk
+import subprocess
 
 # Prompts the user for a password without echoing raw_input
 # @param String prompt The prompt to display
@@ -22,8 +22,7 @@ def askReset():
 # Copies the given text to the system clipboard
 # @param String text The text to paste to the system clipboard
 def addToClipboard(text):
-	#tk = Tk()
-	#tk.clipboard_clear()
-	#tk.clipboard_append(text)
-	#tk.destroy()
-	pass
+	p1 = subprocess.Popen(["echo", text], stdout=subprocess.PIPE)
+	p2 = subprocess.Popen(["clip"], stdin=p1.stdout, stdout=subprocess.PIPE)
+	p1.stdout.close()  # Allow p1 to receive a SIGPIPE if p2 exits.
+	p2.communicate()[0]
