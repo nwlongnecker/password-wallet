@@ -1,7 +1,7 @@
 # Helper module for interfacing with the user
 
 import getpass
-from Tkinter import Tk
+#from Tkinter import Tk
 
 # Prompts the user for a password without echoing raw_input
 # @param String prompt The prompt to display
@@ -22,7 +22,8 @@ def askReset():
 # Copies the given text to the system clipboard
 # @param String text The text to paste to the system clipboard
 def addToClipboard(text):
-	tk = Tk()
-	tk.clipboard_clear()
-	tk.clipboard_append(text)
-	tk.destroy()
+	#tk = Tk()
+	#tk.clipboard_clear()
+	#tk.clipboard_append(text)
+	#tk.destroy()
+	pass
