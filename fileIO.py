@@ -31,4 +31,5 @@ def readFile(path):
 
 # Removes a file
 def removeFile(path):
-	os.remove(path)
+	if fileExists(path):
+		os.remove(path)

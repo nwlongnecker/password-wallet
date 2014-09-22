@@ -8,7 +8,7 @@ from datetime import datetime
 # @param String plaintext The string to hash
 # @return Returns the hashed key
 def hash(plaintext, outputType):
-	hashKey = "nothing"
+	hashKey = None
 	try:
 		# write out the input
 		fileIO.writeFile('plain.tmp', plaintext)
@@ -21,14 +21,17 @@ def hash(plaintext, outputType):
 		fileIO.removeFile('plain.tmp')
 		fileIO.removeFile('key.tmp')
 		# return the output
-		return hashKey.replace('SHA256(plain.tmp)= ', '', 1)
+		if hashKey is None:
+			raise Exception("hash failed")
+		else:
+			return hashKey.replace('SHA256(plain.tmp)= ', '', 1)
 
 # Decrypts the cipher with the given key
 # @param String key The key to use when decrypting the cipher
 # @param String cipher The encrypted text
 # @return Returns the cipher in plaintext
 def decrypt(key, ciphertext):
-	plaintext = "nothing"
+	plaintext = None
 	try:
 		# write out the input
 		fileIO.writeFile('key.tmp', key)	
@@ -43,14 +46,17 @@ def decrypt(key, ciphertext):
 		fileIO.removeFile('cipher.tmp')
 		fileIO.removeFile('plain.tmp')
 		# return the output
-		return plaintext
+		if plaintext is None:
+			raise Exception("decrypt failed")
+		else:
+			return plaintext
 
 # Encrypts the plaintext with the given key
 # @param String key The key to use when encrypting the plaintext
 # @param String plaintext The text to encrypt
 # @return Returns the encrypted plaintext
 def encrypt(key, plaintext):
-	ciphertext = "nothing"
+	ciphertext = None
 	try:
 		# write out the input
 		fileIO.writeFile('key.tmp', key)	
@@ -65,14 +71,25 @@ def encrypt(key, plaintext):
 		fileIO.removeFile('plain.tmp')
 		fileIO.removeFile('cipher.tmp')
 		# return the output
-		return ciphertext
+		if ciphertext is None:
+			raise Exception("encrypt failed")
+		else:
+			return ciphertext
 
 # Generates a random password
 # @return Returns the generated password
 def generatePassword():
-	# get the current time
-	time = datetime.now().time()
-	# get a random number
-	rand = subprocess.check_output(['openssl', 'rand', '-hex', '16'])
-	# return the hash of the current time and random nonce value
-	return hash(str(time)+str(rand), '-hex')
+	password = None
+	try: 
+		# get the current time
+		time = datetime.now().time()
+		# get a random number
+		rand = subprocess.check_output(['openssl', 'rand', '-hex', '16'])
+		# return the hash of the current time and random nonce value
+		password = hash(str(time)+str(rand), '-hex')
+	finally:
+		#return the output
+		if password is None:
+			raise Exception("generatePassword failed")
+		else:
+			return password
