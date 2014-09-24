@@ -8,8 +8,8 @@ import fileIO
 import sys
 
 # Check to make sure the wallet has been initialized
-if not fileIO.fileExists(fileIO.WALLET_FILE):
-	sys.exit('Wallet not initialized')
+if not cr.existsWallet():
+	sys.exit('\nWallet not initialized\n')
 # Get password key
 key = openSSL.hash(uiHelper.getPassword(), '-binary')
 # Open the wallet using the key

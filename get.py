@@ -8,8 +8,8 @@ import fileIO
 import sys
 
 # Check to make sure the wallet has been initialized
-if not fileIO.fileExists(fileIO.WALLET_FILE):
-	sys.exit('Wallet not initialized')
+if not cr.existsWallet():
+	sys.exit('\nWallet not initialized\n')
 # Get password key
 key = openSSL.hash(uiHelper.getPassword(), '-binary')
 # Open the wallet using the key
@@ -21,8 +21,6 @@ site = uiHelper.getSite()
 found = re.search(r'^(' + site + '),(.*)$', wallet, re.M)
 if found:
 	# Copy the password to the system clipboard
-	print found.group(2)
 	uiHelper.addToClipboard(found.group(2))
-	print('Password copied to clipboard')
 else:
 	print('Could not find ' + site + ' in your wallet')

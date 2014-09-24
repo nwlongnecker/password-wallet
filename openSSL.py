@@ -102,7 +102,7 @@ def generatePassword():
 		password = hash(str(time)+str(rand), '-hex')
 	finally:
 		# delete temp files
-		#fileIO.removeFile('rand.tmp')
+		fileIO.removeFile('rand.tmp')
 		#return the output
 		if password is None or retval != 0:
 			raise Exception("generatePassword failed")

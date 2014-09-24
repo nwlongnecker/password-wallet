@@ -7,8 +7,8 @@ import fileIO
 import sys
 
 # Check to make sure the wallet has been initialized
-if not fileIO.fileExists(fileIO.WALLET_FILE):
-	sys.exit('Wallet not initialized')
+if not cr.existsWallet():
+	sys.exit('\nWallet not initialized\n')
 # Prompts the user for the master password and hashes it into the encryption key
 key = openSSL.hash(uiHelper.getPassword(), '-binary')
 # Open the wallet using the key
@@ -23,4 +23,3 @@ wallet = wallet + site + ',' + newPassword + '\n'
 cr.closeWallet(key, wallet)
 # Copy the new password to the clipboard
 uiHelper.addToClipboard(newPassword)
-print('Password copied to clipboard')

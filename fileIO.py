@@ -6,9 +6,6 @@ import stat
 # The default permissions of files
 PERMISSIONS = stat.S_IWUSR | stat.S_IRUSR
 
-# The file where we save the wallet data
-WALLET_FILE = 'wallet'
-
 # Checks whether the given file exists
 # @return Returns true if the given file exists, false otherwise
 def fileExists(path):
