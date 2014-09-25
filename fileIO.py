@@ -14,6 +14,7 @@ def fileExists(path):
 # Writes the given text to the given file
 # @param String text The text to write to the given file
 def writeFile(path, text):
+	removeFile(path)
 	with os.fdopen(os.open(path, os.O_WRONLY | os.O_CREAT, PERMISSIONS), 'w') as f: 
 		f.write(text)
 

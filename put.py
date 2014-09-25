@@ -18,7 +18,7 @@ site = uiHelper.getSite()
 # Generate a new password for this site
 newPassword = openSSL.generatePassword()
 # Append the password to the wallet
-wallet = wallet + site + ',' + newPassword + '\n'
+wallet = wallet + site + ',' + newPassword
 # Write the change to the wallet using the key
 cr.closeWallet(key, wallet)
 # Copy the new password to the clipboard
